@@ -1,10 +1,9 @@
 from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from django.db.models import Index
-from django.utils import timezone
 
 from .manager import UserManager
-from .utils import generate_custom_id
+from apps.utils import generate_custom_id
 
 
 class User(AbstractBaseUser):

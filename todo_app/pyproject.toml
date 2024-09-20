@@ -15,6 +15,7 @@ environs = "^11.0.0"
 psycopg = {extras = ["binary"], version = "^3.2.2"}
 pytest = "^8.3.3"
 pytest-django = "^4.9.0"
+python-slugify = "^8.0.4"
 
 
 [build-system]
