@@ -5,7 +5,7 @@ from . import serializers
 from apps.authentication.serializers import UserSerializer
 
 login_extend_schema = extend_schema(
-    tags=['Authorization'],
+    tags=['Authentication'],
     summary='Вход в аккаунт',
     request=serializers.LoginSerializer,
     responses={

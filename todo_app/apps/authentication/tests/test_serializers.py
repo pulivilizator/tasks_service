@@ -1,5 +1,5 @@
 import pytest
-from apps.accounts.serializers import UserSerializer
+from apps.authentication.serializers import UserSerializer
 from django.contrib.auth import get_user_model
 
 User = get_user_model()

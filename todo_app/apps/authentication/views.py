@@ -76,7 +76,7 @@ class LogoutAPIView(APIView):
 
 
 @extend_schema(
-    tags=['Authorization'],
+    tags=['Authentication'],
     summary='Замена устаревшего токена авторизации',
     description='Принимает токен refresh и возвращает токен новую пару токенов'
 )
