@@ -23,12 +23,19 @@ class Celery:
     celery_broker_url: str
     celery_result_backend: str
 
+@dataclass
+class Redis:
+    host: str
+    port: int
+    pub_db: int
 
 @dataclass
 class Config:
     database: Database
     django: Django
     celery: Celery
+    redis: Redis
+
 
 
 def get_config(path: str | None = None) -> Config:
@@ -47,6 +54,11 @@ def get_config(path: str | None = None) -> Config:
             secret_key=env('DJANGO_SECRET_KEY'),
             allowed_hosts=env.list('ALLOWED_HOSTS', delimiter=' '),
             debug=env.bool('DEBUG_MODE', default=False),
+        ),
+        redis=Redis(
+            host=env('REDIS_HOST'),
+            port=env.int('REDIS_PORT'),
+            pub_db=env.int('PUB_DB')
         ),
         celery=Celery(
             celery_broker_url=f'redis://{env('REDIS_HOST')}:{env('REDIS_PORT')}/{env('CELERY_REDIS_BROKER_DB')}',

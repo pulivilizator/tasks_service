@@ -10,13 +10,13 @@ from .models import User
 class UserAdmin(UserAdmin):
     add_form = UserCreationForm
 
-    list_display = ('email', 'name', 'surname', 'is_active', 'is_admin', 'created_at')
+    list_display = ('username', 'first_name', 'last_name', 'is_active', 'is_admin', 'created_at')
     list_filter = ('is_active', 'is_admin', 'created_at')
 
     fieldsets = [
         ('User info', {
             'fields': [
-                'email', 'name', 'surname', 'is_active'
+                'tg_id', 'username', 'first_name', 'last_name', 'is_active'
             ],
         }),
         ('Permissions', {
@@ -29,11 +29,11 @@ class UserAdmin(UserAdmin):
     add_fieldsets = [
         (None, {
             'fields': [
-                'email', 'name', 'surname', 'password1', 'password2'
+                'tg_id', 'username', 'first_name', 'last_name', 'password1', 'password2'
             ],
         }),
     ]
 
-    ordering = ('email',)
+    ordering = ('username',)
 
     filter_horizontal = ()

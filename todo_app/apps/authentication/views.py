@@ -1,4 +1,5 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.hashers import make_password
 from django.utils import timezone
 
 from drf_spectacular.utils import extend_schema
@@ -9,6 +10,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenRefreshView
 
+from .publisher import registration_publish
 from .serializers import UserSerializer
 from .schema import schema
 
@@ -18,16 +20,15 @@ class RegistrationAPIView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.save()
-            refresh = RefreshToken.for_user(user)
-            refresh.payload.update({
-                'user_id': user.id,
-                'email': user.email
-            })
-            return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token)
-            }, status=status.HTTP_201_CREATED)
+            if get_user_model().objects.get(tg_id=serializer.tg_id):
+                user = serializer.save()
+                hashed_password = make_password(user.password)
+                registration_publish(user_id=user.tg_id, password_hash=hashed_password)
+                return Response({
+                    'message': 'Confirm registration in telegram'
+                }, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Такой пользователь не найден'}, status=status.HTTP_400_BAD_REQUEST)
         return Response({
             'error': serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)

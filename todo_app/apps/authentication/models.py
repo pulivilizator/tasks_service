@@ -7,22 +7,18 @@ from apps.utils import generate_custom_id
 
 
 class User(AbstractBaseUser):
-    id = models.CharField(
-        max_length=16,
-        primary_key=True,
-        default=generate_custom_id,
-        editable=False
-    )
-    email = models.EmailField(max_length=255, unique=True, verbose_name='Почта')
-    name = models.CharField(max_length=255, verbose_name='Имя')
-    surname = models.CharField(max_length=255, verbose_name='Фамилия')
+    tg_id = models.BigIntegerField(primary_key=True, unique=True)
+    username = models.CharField(max_length=255, unique=True)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    password = models.CharField(max_length=128, blank=True, null=True)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'surname']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['tg_id', 'first_name']
 
     objects = UserManager()
 
@@ -40,12 +36,12 @@ class User(AbstractBaseUser):
         return self.is_admin
 
     def full_name(self):
-        return f'{self.surname} {self.name}'
+        return f'{self.last_name} {self.first_name}'
 
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
         indexes = (
-            Index(fields=('email',)),
+            Index(fields=('username',)),
         )
 

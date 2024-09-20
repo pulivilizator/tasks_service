@@ -131,3 +131,6 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     'BLACK_LIST_AFTER-ROTATION': True,
 }
+
+PRIVATE_SERVICE_KEY: Path = BASE_DIR / 'ssh_keys' / 'private.pem'
+PUBLIC_SERVICE_KEY: Path = BASE_DIR / 'ssh_keys' / 'public.pem'

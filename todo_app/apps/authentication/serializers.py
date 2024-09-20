@@ -5,17 +5,22 @@ from rest_framework import serializers
 
 from rest_framework.validators import UniqueValidator
 
+from apps.authentication.models import User
+
 
 class UserSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(
-        validators=[UniqueValidator(queryset=get_user_model().objects.all(), message='Email уже зарегистрирован')])
-    name = serializers.CharField(max_length=255)
-    surname = serializers.CharField(max_length=255)
+    tg_id = serializers.IntegerField()
+    password = serializers.CharField()
 
     class Meta:
-        model = get_user_model()
-        fields = '__all__'
+        fields = ('tg_id', 'password')
         extra_kwargs = {'password': {'write_only': True}}
+
+    def validate_tg_id(self, value):
+        try:
+            get_user_model().objects.get(tg_id=value)
+        except User.DoesNotExist:
+            raise serializers.ValidationError('User does not exist')
 
     def validate_password(self, value):
         try:
@@ -24,12 +29,3 @@ class UserSerializer(serializers.ModelSerializer):
         except DjangoValidationError as e:
             raise serializers.ValidationError(
                 'Пароль должен состоять минимум из 8ми символов и содержать цифры, заглавные и строчные буквы')
-
-    def create(self, validated_data):
-        user = get_user_model().objects.create_user(
-            email=validated_data['email'],
-            name=validated_data['name'],
-            surname=validated_data['surname'],
-            password=validated_data['password'],
-        )
-        return user

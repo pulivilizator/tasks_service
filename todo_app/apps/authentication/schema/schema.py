@@ -27,7 +27,7 @@ login_extend_schema = extend_schema(
 )
 
 registration_extend_schema = extend_schema(
-    tags=['Authorization'],
+    tags=['Authentication'],
     summary='Регистрация нового пользователя',
     request=UserSerializer,
     responses={
@@ -38,30 +38,17 @@ registration_extend_schema = extend_schema(
         OpenApiExample(
             name='Пример данных регистрации',
             value={
-                'email': 'test@example.com',
-                'name': 'Test',
-                'surname': 'User',
+                'tg_id': '11122223333',
                 'password': 'Password123!'
             },
             summary='Пример запроса для регистрации',
-            request_only=True,
-        ),
-        OpenApiExample(
-            name='Пример данных регистрации №2',
-            value={
-                'email': 'test@example.com',
-                'name': 'Test',
-                'surname': 'User',
-                'password': 'Password123!'
-            },
-            summary='Пример запроса для регистрации №2',
             request_only=True,
         ),
     ]
 )
 
 logout_extend_schema = extend_schema(
-    tags=['Authorization'],
+    tags=['Authentication'],
     summary='Выход из аккаунта',
     request=serializers.LogoutSerializer,
     responses={
