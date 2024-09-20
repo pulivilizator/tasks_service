@@ -18,12 +18,10 @@ from .schema import schema
 @schema.registration_extend_schema
 class HttpRegistrationAPIView(APIView):
     def post(self, request, *args, **kwargs):
-        print(request.data)
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             tg_id = serializer.validated_data.get('tg_id')
             has_user = get_user_model().objects.filter(tg_id=tg_id).exists()
-            print(serializer.validated_data)
             if has_user:
                 password = serializer.validated_data.get('password')
                 hashed_password = make_password(password)
@@ -42,19 +40,18 @@ class HttpRegistrationAPIView(APIView):
 class LoginAPIView(APIView):
     def post(self, request, *args, **kwargs):
         data = request.data
-        email = data.get('email', None)
+        tg_id = data.get('tg_id', None)
         password = data.get('password', None)
-        if not email or not password:
+        if not tg_id or not password:
             return Response({'error': 'Отсутствует логин или пароль'}, status=status.HTTP_400_BAD_REQUEST)
 
-        user = authenticate(email=email, password=password)
+        user = authenticate(tg_id=tg_id, password=password)
         if user is None:
             return Response({'error': 'Неверные данные'}, status=status.HTTP_401_UNAUTHORIZED)
 
         refresh = RefreshToken.for_user(user)
         refresh.payload.update({
-            'user_id': user.id,
-            'email': user.email
+            'tg_id': user.tg_id,
         })
         user.last_login = timezone.now()
 

@@ -17,8 +17,8 @@ class User(AbstractBaseUser):
     updated_at = models.DateTimeField(auto_now=True)
     password = models.CharField(max_length=128, blank=True, null=True)
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['tg_id', 'first_name']
+    USERNAME_FIELD = 'tg_id'
+    REQUIRED_FIELDS = ['username', 'first_name']
 
     objects = UserManager()
 

@@ -17,7 +17,7 @@ login_extend_schema = extend_schema(
         OpenApiExample(
             name='Пример данных входа',
             value={
-                'email': 'test@example.com',
+                'tg_id': '28736471326491',
                 'password': 'Password123!'
             },
             summary='Пример запроса для входа',

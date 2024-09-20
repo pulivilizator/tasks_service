@@ -131,6 +131,8 @@ SIMPLE_JWT = {
     'ALGORITHM': 'HS256',
     'ROTATE_REFRESH_TOKENS': True,
     'BLACK_LIST_AFTER-ROTATION': True,
+    'USER_ID_FIELD': 'tg_id',
+    'USER_ID_CLAIM': 'tg_id',
 }
 
 PRIVATE_SERVICE_KEY: Path = BASE_DIR / 'ssh_keys' / 'private.pem'
