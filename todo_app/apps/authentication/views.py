@@ -18,12 +18,16 @@ from .schema import schema
 @schema.registration_extend_schema
 class RegistrationAPIView(APIView):
     def post(self, request, *args, **kwargs):
+        print(request.data)
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            if get_user_model().objects.get(tg_id=serializer.tg_id):
-                user = serializer.save()
-                hashed_password = make_password(user.password)
-                registration_publish(user_id=user.tg_id, password_hash=hashed_password)
+            tg_id = serializer.validated_data.get('tg_id')
+            has_user = get_user_model().objects.filter(tg_id=tg_id).exists()
+            print(serializer.validated_data)
+            if has_user:
+                password = serializer.validated_data.get('password')
+                hashed_password = make_password(password)
+                registration_publish(user_id=tg_id, password_hash=hashed_password)
                 return Response({
                     'message': 'Confirm registration in telegram'
                 }, status=status.HTTP_200_OK)

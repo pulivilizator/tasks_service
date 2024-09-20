@@ -8,9 +8,9 @@ from rest_framework.validators import UniqueValidator
 from apps.authentication.models import User
 
 
-class UserSerializer(serializers.ModelSerializer):
-    tg_id = serializers.IntegerField()
-    password = serializers.CharField()
+class UserSerializer(serializers.Serializer):
+    tg_id = serializers.IntegerField(required=True)
+    password = serializers.CharField(required=True)
 
     class Meta:
         fields = ('tg_id', 'password')
@@ -19,6 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
     def validate_tg_id(self, value):
         try:
             get_user_model().objects.get(tg_id=value)
+            return value
         except User.DoesNotExist:
             raise serializers.ValidationError('User does not exist')
 
