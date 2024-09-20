@@ -9,7 +9,6 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.authentication import BaseAuthentication
 from django.conf import settings
 from cryptography.exceptions import InvalidSignature
-from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class RSAPublicKeyAuthentication(BaseAuthentication):
@@ -18,7 +17,8 @@ class RSAPublicKeyAuthentication(BaseAuthentication):
 
         if not public_key_base64:
             return None
-
+        tg_id = request.headers.get('X-Tg_ID')
+        user = get_user_model().objects.get(tg_id=tg_id)
         try:
             public_key_pem = base64.b64decode(public_key_base64)
             public_key = load_pem_public_key(public_key_pem, backend=default_backend())
@@ -32,7 +32,7 @@ class RSAPublicKeyAuthentication(BaseAuthentication):
             raise AuthenticationFailed('Invalid private key format')
 
         if self.is_matching_key_pair(public_key, private_key):
-            return get_user_model().objects.all()[0], None
+            return user, None
 
     def is_matching_key_pair(self, public_key, private_key):
         test_message = b"test"
