@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from .models import Task, Tag
 from .permissions import IsOwner, IsAdminOrReadOnly
-from .schemas.schemas import task_schema, common_task_extend_schema, common_tag_extend_schema
+from .schemas.schemas import task_schema, common_task_extend_schema, common_tag_extend_schema, tag_schema
 from .serializers import TaskSerializer, TagSerializer
 
 @common_task_extend_schema
@@ -34,6 +34,7 @@ class TaskViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 @common_tag_extend_schema
+@tag_schema
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer

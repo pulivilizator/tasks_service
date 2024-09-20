@@ -17,7 +17,7 @@ class RSAPublicKeyAuthentication(BaseAuthentication):
 
         if not public_key_base64:
             return None
-        tg_id = request.headers.get('X-Tg_ID')
+        tg_id = request.headers.get('X-Tg-ID')
         user = get_user_model().objects.get(tg_id=tg_id)
         try:
             public_key_pem = base64.b64decode(public_key_base64)
@@ -63,5 +63,5 @@ class RSAPublicKeyAuthenticationScheme(OpenApiAuthenticationExtension):
             'type': 'apiKey',
             'in': 'header',
             'name': 'X-Public-Key',
-            'description': 'Public Key Authentication'
+            'description': 'Public Key and tg id authentication for services'
         }
