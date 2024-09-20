@@ -16,7 +16,7 @@ from .schema import schema
 
 
 @schema.registration_extend_schema
-class RegistrationAPIView(APIView):
+class HttpRegistrationAPIView(APIView):
     def post(self, request, *args, **kwargs):
         print(request.data)
         serializer = UserSerializer(data=request.data)
