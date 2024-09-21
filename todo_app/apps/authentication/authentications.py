@@ -17,7 +17,7 @@ class RSAPublicKeyAuthentication(BaseAuthentication):
 
         if not public_key_base64:
             return None
-        tg_id = request.headers.get('X-Tg-ID')
+        tg_id = request.headers.get('X-Tg-Id')
         user = get_user_model().objects.get(tg_id=tg_id)
         try:
             public_key_pem = base64.b64decode(public_key_base64)
