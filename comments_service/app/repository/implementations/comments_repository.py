@@ -25,7 +25,7 @@ class CommentRepository(RedisRepository):
             return True
         return False
 
-    async def delete_comment(self, task_slug, comment_id: str) -> bool:
+    async def delete_comment(self, task_slug, comment_id: int) -> bool:
         comments_key = CommentKeys.COMMENTS_KEY.format(task_slug)
         result = await self._r.hdel(comments_key, comment_id)
 

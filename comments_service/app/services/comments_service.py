@@ -2,6 +2,7 @@ from http import HTTPMethod
 from typing import Optional
 
 from aiohttp import ClientSession, ClientResponseError
+from fastapi import HTTPException
 from starlette import status
 from starlette.authentication import AuthenticationError
 
@@ -36,22 +37,21 @@ class CommentsService:
         """
         Проверяет аутентификацию или существование задачи(что включает в себя аутентификацию)
         """
-
-
+        print(task_slug)
         path = V1TasksUrls.GET_CURRENT_TASK.format(task_slug) if task_slug else V1TasksUrls.GET_TASKS
         try:
             await self._make_request(method=HTTPMethod.GET,
-                                     url=self.config.backend_url + path,
+                                     url=self.config.backend_url.unicode_string() + path,
                                      headers=headers,
                                      cookies=cookies)
         except ClientResponseError as e:
             if e.status == status.HTTP_404_NOT_FOUND:
                 raise TaskNotFound(task_slug)
             if e.status in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN):
-                raise AuthenticationError()
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
             if e.status == status.HTTP_429_TOO_MANY_REQUESTS:
                 raise TooManyRequestsError()
-            raise e
+            raise HTTPException(status_code=e.status, detail=e.message, headers=e.headers)
 
 
 
