@@ -1,9 +1,11 @@
 from typing import AsyncIterator
 
 from dishka import Provider, provide, Scope
+from fluentogram import TranslatorHub
 from redis.asyncio import Redis
 
 from core.config.config import get_config, ConfigModel
+from infrastructure.utils.i18n import create_translator_hub
 
 
 class BaseProvider(Provider):
@@ -16,5 +18,10 @@ class BaseProvider(Provider):
         r = Redis.from_url(config.redis.dsn.unicode_string())
         yield r
         await r.aclose()
+
+    @provide(scope=Scope.APP)
+    def get_translator_hub(self) -> TranslatorHub:
+        translator_hub = create_translator_hub()
+        return translator_hub
 
 
