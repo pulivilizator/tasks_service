@@ -4,7 +4,7 @@ from .models import Tag, Task
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ['id', 'slug', 'name']
+        fields = ['slug', 'name', 'created_at']
         read_only_fields = ['id', 'slug']
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -12,7 +12,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = ['id', 'slug', 'title', 'description', 'start_datetime', 'user', 'tags']
+        fields = '__all__'
         read_only_fields = ['id', 'slug', 'user']
 
     def create(self, validated_data):
@@ -22,3 +22,8 @@ class TaskSerializer(serializers.ModelSerializer):
             tag, created = Tag.objects.get_or_create(**tag_data)
             task.tags.add(tag)
         return task
+
+class TaskListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['slug', 'title', 'created_at']

@@ -21,4 +21,4 @@ def unique_slug_generator(instance, slug_field, new_slug=None):
     if qs_exists:
         new_slug = f'{slug}-{str(uuid4())[:8]}'
         return unique_slug_generator(instance, slug_field=slug_field, new_slug=new_slug)
-    return slug
+    return slug[-40:]

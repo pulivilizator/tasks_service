@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from .models import Task, Tag
 from .permissions import IsOwner, IsAdminOrReadOnly
 from .schemas.schemas import task_schema, common_task_extend_schema, common_tag_extend_schema, tag_schema
-from .serializers import TaskSerializer, TagSerializer
+from .serializers import TaskSerializer, TagSerializer, TaskListSerializer
+
 
 @common_task_extend_schema
 @task_schema
@@ -29,6 +30,11 @@ class TaskViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return TaskListSerializer
+        return super().get_serializer_class()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

@@ -106,7 +106,7 @@ AUTH_USER_MODEL = "authentication.User"
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
         'apps.authentication.authentications.RSAPublicKeyAuthentication',
     ),
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
@@ -116,9 +116,9 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_CLASSES': (
         'rest_framework.throttling.UserRateThrottle',
     ),
-    'DEFAULT_THROTTLE_RATES': {
-        'user': '15/minute',
-    },
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'user': '15/minute',
+    # },
 }
 
 SPECTACULAR_SETTINGS = {
