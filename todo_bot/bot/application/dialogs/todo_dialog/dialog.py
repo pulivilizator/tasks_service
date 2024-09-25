@@ -2,7 +2,7 @@ from aiogram_dialog import Dialog, Window
 from aiogram_dialog.widgets.kbd import Back, Cancel, ListGroup, Button, ScrollingGroup, Select, Column, SwitchTo, Start
 from aiogram_dialog.widgets.text import Format
 
-from application.states import TodoSG, EditSG
+from application.states import TodoSG, CreateSG
 from core.enums import ElementsPerPage
 from .getters import todo_getter, todo_list_getter, detail_getter
 from .handlers import change_status, clear_data, delete_todo, start_edit, send_todo

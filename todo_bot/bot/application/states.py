@@ -14,3 +14,10 @@ class EditSG(StatesGroup):
     end_time = State()
     tags = State()
     save = State()
+
+class CreateSG(StatesGroup):
+    title = State()
+    description = State()
+    end_time = State()
+    tags = State()
+    save = State()

@@ -13,7 +13,7 @@ class Language(BaseKeys):
     REDIS_KEY = 'language:{}'
 
 class V1TasksUrls(StrEnum):
-    GET_TASKS = 'v1/tasks/'
+    TASKS = 'v1/tasks/'
     CURRENT_TASK = 'v1/tasks/{}/'
 
 class ElementsPerPage(IntEnum):

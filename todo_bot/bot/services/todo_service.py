@@ -16,7 +16,7 @@ class TodoService:
         self._headers = headers
 
     async def get_list(self) -> list[dto.Todo]:
-        url = f"{self._config.todo_backend_url}{V1TasksUrls.GET_TASKS}"
+        url = f"{self._config.todo_backend_url}{V1TasksUrls.TASKS}"
         async with self._session.get(url=url, headers=self._headers.model_dump(by_alias=True)) as response:
             todos = await response.json()
             todo_list = [dto.Todo.model_validate(todo, from_attributes=True)
@@ -39,3 +39,9 @@ class TodoService:
         url = f"{self._config.todo_backend_url}{V1TasksUrls.CURRENT_TASK.format(slug)}"
         async with self._session.delete(url=url, headers=self._headers.model_dump(by_alias=True)) as response:
             return response.status == 204
+
+    async def create(self, data: dto.CreateTodo):
+        url = f"{self._config.todo_backend_url}{V1TasksUrls.TASKS}"
+        async with self._session.post(url=url, headers=self._headers.model_dump(by_alias=True), json=data.model_dump(mode='json')) as response:
+            todo = await response.json()
+            return dto.TodoDetail.model_validate(todo, from_attributes=True)

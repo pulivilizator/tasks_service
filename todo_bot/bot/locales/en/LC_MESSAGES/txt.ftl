@@ -1,9 +1,9 @@
 menu-start_message = <b>This is the main menu of the note taking bot.</b>
-                     You can choose your language and start working with notes.
+                     You can choose your language and start working with tasks.
 
-menu-start_todo_button = My notes
+menu-start_todo_button = My tasks
 
-todo-list-message = <b>Notes:</b>
+todo-list-message = <b>Tasks:</b>
 
 back-button = Back
 
@@ -36,7 +36,7 @@ todo-delete_button = 🗑 Delete 🗑
 
 todo-edit_button = 🛠 Edit 🛠
 
-todo-create_button =
+todo-create_button = Create task
 
 edit-skip = ➡️ Skip ➡️
 edit-back = ⬅️ Back ⬅️
@@ -48,3 +48,9 @@ edit-new_description = <b>Enter a new description</b>
 edit-new_end_time = <b>Enter a new end time in the format DD.MM.YYYY HH:MM</b>
 edit-new_tags = <b>Enter new comma-delimited tags</b>
 edit-confirm = <b>Confirm change:</b>
+
+edit-new_title = <b>Enter title</b>
+edit-new_description = <b>Enter description</b>
+edit-new_end_time = <b>Enter end time in the format DD.MM.YYYY HH:MM</b>
+edit-new_tags = <b>Enter comma-delimited tags</b>
+edit-confirm = <b>Confirm create:</b>

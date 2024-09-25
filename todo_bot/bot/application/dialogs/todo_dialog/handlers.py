@@ -6,7 +6,7 @@ from aiogram_dialog.widgets.kbd import Button
 from dishka.integrations.aiogram import FromDishka
 from dishka.integrations.aiogram_dialog import inject
 
-from application.states import EditSG
+from application.states import CreateSG
 from core import dto
 from services.todo_service import TodoService
 
@@ -39,7 +39,7 @@ async def start_edit(callback: CallbackQuery,
                       widget: Button,
                       dialog_manager: DialogManager,
                       *args, **kwargs):
-   await dialog_manager.start(state=EditSG.title, data=dialog_manager.dialog_data)
+   await dialog_manager.start(state=CreateSG.title, data=dialog_manager.dialog_data)
 
 @inject
 async def send_todo(start_data: Data,

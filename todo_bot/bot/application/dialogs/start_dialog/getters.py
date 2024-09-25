@@ -15,7 +15,8 @@ async def start_menu_getter(dialog_manager: DialogManager,
                            **kwargs) -> dict[str, tuple | str]:
     return {
         'menu_start_message': i18n.menu.start_message(),
-        'start_todo_button': i18n.menu.start_todo_button()
+        'start_todo_button': i18n.menu.start_todo_button(),
+        'start_create_button': i18n.todo.create_button(),
     }
 
 async def get_langs(dialog_manager: DialogManager,
