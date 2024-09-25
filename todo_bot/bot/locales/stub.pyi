@@ -8,6 +8,13 @@ class TranslatorRunner:
     todo: Todo
     back: Back
     lang: Lang
+    edit: Edit
+
+    @staticmethod
+    def incorrect_message() -> Literal["""&lt;b&gt;Enter a correct text message&lt;/b&gt;"""]: ...
+
+    @staticmethod
+    def input_end_time_error() -> Literal["""&lt;b&gt;Enter correct date&lt;/b&gt;"""]: ...
 
 
 class Menu:
@@ -46,7 +53,10 @@ class Todo:
     def change_status() -> Literal["""✅ Change note status ❌"""]: ...
 
     @staticmethod
-    def delete_button() -> Literal["""❌ Delete ❌"""]: ...
+    def delete_button() -> Literal["""🗑 Delete 🗑"""]: ...
+
+    @staticmethod
+    def edit_button() -> Literal["""🛠 Edit 🛠"""]: ...
 
 
 class TodoList:
@@ -70,4 +80,33 @@ class Lang:
 class TodoEnd_time:
     @staticmethod
     def default() -> Literal["""Not set"""]: ...
+
+
+class Edit:
+    @staticmethod
+    def skip() -> Literal["""➡️ Skip ➡️"""]: ...
+
+    @staticmethod
+    def back() -> Literal["""⬅️ Back ⬅️"""]: ...
+
+    @staticmethod
+    def cancel() -> Literal["""Cancel and return"""]: ...
+
+    @staticmethod
+    def save() -> Literal["""✔️ Save ✔️"""]: ...
+
+    @staticmethod
+    def new_title() -> Literal["""&lt;b&gt;Enter a new title&lt;/b&gt;"""]: ...
+
+    @staticmethod
+    def new_description() -> Literal["""&lt;b&gt;Enter a new description&lt;/b&gt;"""]: ...
+
+    @staticmethod
+    def new_end_time() -> Literal["""&lt;b&gt;Enter a new end time in the format DD.MM.YY HH:MM&lt;/b&gt;"""]: ...
+
+    @staticmethod
+    def new_tags() -> Literal["""&lt;b&gt;Enter new comma-delimited tags&lt;/b&gt;"""]: ...
+
+    @staticmethod
+    def confirm() -> Literal["""&lt;b&gt;Confirm change:&lt;/b&gt;"""]: ...
 

@@ -6,7 +6,6 @@ from dishka.integrations.aiogram_dialog import inject
 from fluentogram import TranslatorRunner
 from dishka.integrations.aiogram import FromDishka
 
-from application.handlers.commands_handler import router
 from core import dto
 from core.enums import ElementsPerPage
 from services.todo_service import TodoService
@@ -65,5 +64,6 @@ async def detail_getter(dialog_manager: DialogManager,
                                           tags=tags
                                           ),
         'change_status': i18n.todo.change_status(),
-        'todo_delete': i18n.todo.delete_button()
+        'todo_delete': i18n.todo.delete_button(),
+        'start_edit': i18n.todo.edit_button(),
     }

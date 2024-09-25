@@ -4,9 +4,9 @@ from typing import Optional
 from pydantic import BaseModel
 
 class Tag(BaseModel):
-    slug: str
+    slug: str | None = None
     name: str
-    created_at: datetime
+    created_at: datetime | None = None
 
 class Todo(BaseModel):
     slug: str

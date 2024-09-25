@@ -7,3 +7,10 @@ class TodoSG(StatesGroup):
     todo_list = State()
     todo_create = State()
     todo_detail = State()
+
+class EditSG(StatesGroup):
+    title = State()
+    description = State()
+    end_time = State()
+    tags = State()
+    save = State()
