@@ -23,6 +23,19 @@ class TaskSerializer(serializers.ModelSerializer):
             task.tags.add(tag)
         return task
 
+    def update(self, instance: Task, validated_data):
+        tags_data = validated_data.pop('tags', [])
+        for k, v in validated_data.items():
+            if hasattr(instance, k):
+                setattr(instance, k, v)
+        instance.save()
+        instance.tags.clear()
+        for tag_data in tags_data:
+            tag, created = Tag.objects.get_or_create(**tag_data)
+            if tag not in instance.tags.all():
+                instance.tags.add(tag)
+        return instance
+
 class TaskListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task

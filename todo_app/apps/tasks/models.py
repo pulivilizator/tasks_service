@@ -40,7 +40,7 @@ class Task(BaseModelMixin):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = unique_slug_generator(self, self.titlse)
+            self.slug = unique_slug_generator(self, self.title)
         if not self.id:
             self.id = generate_custom_id(self.slug, self.user.tg_id)
         return super().save(*args, **kwargs)
