@@ -10,15 +10,14 @@ from core.enums import Language
 if TYPE_CHECKING:
     from bot.locales.stub import TranslatorRunner
 
-@inject
 async def start_menu_getter(dialog_manager: DialogManager,
                            i18n: TranslatorRunner,
                            **kwargs) -> dict[str, tuple | str]:
     return {
-        'start_menu_message': i18n.start_menu_message(),
+        'menu_start_message': i18n.menu.start_message(),
+        'start_todo_button': i18n.menu.start_todo_button()
     }
 
-@inject
 async def get_langs(dialog_manager: DialogManager,
                     i18n: TranslatorRunner,
                     **kwargs) -> dict[str, tuple | str]:

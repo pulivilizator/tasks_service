@@ -1,16 +1,17 @@
 from aiogram_dialog import Dialog, Window
-from aiogram_dialog.widgets.kbd import Row, Radio
+from aiogram_dialog.widgets.kbd import Row, Radio, Start
 from aiogram_dialog.widgets.text import Format
 
 from core.enums import Language
 from .getters import get_langs, start_menu_getter
-from application.states import StartMenuSG
+from application.states import StartMenuSG, TodoSG
 from .handlers import change_lang_handler
 from application.utils.button_checker import SetButtonChecked
 
 dialog = Dialog(
     Window(
-        Format('{start_menu_message}'),
+        Format('{menu_start_message}'),
+        Start(text=Format('{start_todo_button}'), id='start_todo', state=TodoSG.todo_list),
         Row(
             Radio(
                 checked_text=Format('🔘 {item[1]}'),

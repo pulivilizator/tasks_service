@@ -1,4 +1,5 @@
-from enum import StrEnum
+from enum import StrEnum, IntEnum
+
 
 class BaseKeys(StrEnum):
     WIDGET_KEY: str
@@ -10,3 +11,10 @@ class Language(BaseKeys):
 
     WIDGET_KEY = 'language'
     REDIS_KEY = 'language:{}'
+
+class V1TasksUrls(StrEnum):
+    GET_TASKS = 'v1/tasks/'
+    CURRENT_TASK = 'v1/tasks/{}/'
+
+class ElementsPerPage(IntEnum):
+    COUNT = 6

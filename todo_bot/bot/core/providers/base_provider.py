@@ -1,5 +1,7 @@
 from typing import AsyncIterator
 
+from aiogram.client.session.aiohttp import AiohttpSession
+from aiohttp import ClientSession
 from dishka import Provider, provide, Scope
 from fluentogram import TranslatorHub
 from redis.asyncio import Redis
@@ -23,5 +25,11 @@ class BaseProvider(Provider):
     def get_translator_hub(self) -> TranslatorHub:
         translator_hub = create_translator_hub()
         return translator_hub
+
+    @provide(scope=Scope.APP)
+    async def get_session(self) -> AsyncIterator[ClientSession]:
+        session = await AiohttpSession().create_session()
+        yield session
+        await session.close()
 
 

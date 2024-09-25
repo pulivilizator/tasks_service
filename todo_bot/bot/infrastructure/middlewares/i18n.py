@@ -41,7 +41,7 @@ class TranslatorRunnerMiddleware(BaseMiddleware):
                 await repository.set(Language.REDIS_KEY.format(user.id), user.language_code)
                 return user.language_code
             else:
-                await repository.set(Language.REDIS_KEY.format(user.id), Language.RU)
+                await repository.set(Language.REDIS_KEY.format(user.id), Language.EN)
                 return Language.RU
 
         return await repository.get(Language.REDIS_KEY.format(user.id))
