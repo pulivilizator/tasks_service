@@ -43,6 +43,7 @@ class HttpRegistrationAPIView(APIView):
             elif has_user and password is None:
                 return Response(status=status.HTTP_204_NO_CONTENT)
             else:
+                serializer.validated_data.pop('confirmation', None)
                 get_user_model().objects.create(**serializer.validated_data)
             return Response(status=status.HTTP_201_CREATED)
         return Response({

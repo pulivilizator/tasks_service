@@ -1,4 +1,4 @@
-menu-start_message = <b>This is the main menu of the note taking bot.</b>
+menu-start_message = <b>This is the main menu of the task taking bot.</b>
                      You can choose your language and start working with tasks.
 
 menu-start_todo_button = My tasks
@@ -28,7 +28,7 @@ todo-message = <b>Title:</b> {$title}
 todo-done = ✅ Done
 todo-not_done = ❌ Not done
 
-todo-change_status = ✅ Change note status ❌
+todo-change_status = ✅ Change task status ❌
 
 todo-end_time-default = Not set
 

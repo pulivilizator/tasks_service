@@ -1,7 +1,12 @@
+from pathlib import Path
+
 from fluent_compiler.bundle import FluentBundle
 
 from fluentogram import FluentTranslator, TranslatorHub
 
+BASE_DIR = Path(__file__).parent.parent.parent
+
+print(BASE_DIR)
 
 def create_translator_hub() -> TranslatorHub:
     translator_hub = TranslatorHub(
@@ -14,12 +19,12 @@ def create_translator_hub() -> TranslatorHub:
                 locale="ru",
                 translator=FluentBundle.from_files(
                     locale="ru-RU",
-                    filenames=["bot/locales/ru/LC_MESSAGES/txt.ftl"])),
+                    filenames=[BASE_DIR / 'locales' / 'ru' / 'LC_MESSAGES' / 'txt.ftl'])),
             FluentTranslator(
                 locale="en",
                 translator=FluentBundle.from_files(
                     locale="en-US",
-                    filenames=["bot/locales/en/LC_MESSAGES/txt.ftl"]))
+                    filenames=[BASE_DIR / 'locales' / 'en' / 'LC_MESSAGES' / 'txt.ftl']))
         ],
     )
     return translator_hub

@@ -12,7 +12,7 @@ SECRET_KEY = config.django.secret_key
 
 DEBUG = config.django.debug
 
-ALLOWED_HOSTS = config.django.allowed_hosts
+ALLOWED_HOSTS = ['todos', 'comments', '*']
 
 
 INSTALLED_APPS = [
@@ -140,6 +140,7 @@ SIMPLE_JWT = {
     'USER_ID_FIELD': 'tg_id',
     'USER_ID_CLAIM': 'tg_id',
 }
+
 
 PRIVATE_SERVICE_KEY: Path = BASE_DIR / 'ssh_keys' / 'private.pem'
 PUBLIC_SERVICE_KEY: Path = BASE_DIR / 'ssh_keys' / 'public.pem'

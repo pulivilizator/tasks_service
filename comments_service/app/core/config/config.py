@@ -14,7 +14,7 @@ def get_config(path: str = None) -> ConfigModel:
 
     return ConfigModel(
         redis=RedisConfig(
-            dsn=env.str('REDIS_DSN')
+            dsn='redis://' + env.str('REDIS_DSN')
         ),
 
         backend_url=env.str('TASKS_BACKEND_URL')
