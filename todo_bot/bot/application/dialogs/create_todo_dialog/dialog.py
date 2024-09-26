@@ -4,8 +4,8 @@ from aiogram_dialog.widgets.input import TextInput, MessageInput
 from aiogram_dialog.widgets.kbd import Cancel, Next, Back, Button
 from aiogram_dialog.widgets.text import Format
 
-from application.dialogs.edit_dialog.filters import filter_end_time
-from application.dialogs.edit_dialog.handlers import auto_next_window, incorrect_input, end_time_error
+from application.dialogs.edit_todo_dialog.filters import filter_end_time
+from application.dialogs.edit_todo_dialog.handlers import auto_next_window, incorrect_input, end_time_error
 from application.states import CreateSG
 from .getters import create_getter
 from .handlers import create_todo_save

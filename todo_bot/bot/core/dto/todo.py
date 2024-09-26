@@ -16,7 +16,7 @@ class Todo(BaseModel):
 class TodoDetail(Todo):
     id: str
     description: str | None = None
-    end_time: datetime | None = None
+    end_time: datetime |None = None
     is_done: bool = False
     user: int
     tags: list[Optional[Tag]]
@@ -26,4 +26,7 @@ class CreateTodo(BaseModel):
     title: str
     description: str | None = None
     end_time: datetime | None = None
-    tags: list[Optional[Tag]]
+    tags: list[Optional[Tag]] = []
+
+class UpdateStatus(BaseModel):
+    is_done: bool

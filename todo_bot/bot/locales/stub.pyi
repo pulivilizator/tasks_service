@@ -9,12 +9,26 @@ class TranslatorRunner:
     back: Back
     lang: Lang
     edit: Edit
+    create: Create
+    comment: Comment
 
     @staticmethod
     def incorrect_message() -> Literal["""&lt;b&gt;Enter a correct text message&lt;/b&gt;"""]: ...
 
     @staticmethod
     def input_end_time_error() -> Literal["""&lt;b&gt;Enter correct date&lt;/b&gt;"""]: ...
+
+    @staticmethod
+    def comments_empty() -> Literal["""&lt;b&gt;Comments not found&lt;/b&gt;"""]: ...
+
+    @staticmethod
+    def register_yes() -> Literal["""Yes"""]: ...
+
+    @staticmethod
+    def register_no() -> Literal["""No"""]: ...
+
+    @staticmethod
+    def setup_password() -> Literal["""&lt;b&gt;Someone is trying to set a password on your bot profile via browser, is it you? &lt;/b&gt;"""]: ...
 
 
 class Menu:
@@ -40,7 +54,7 @@ class Todo:
 
 &lt;b&gt;{ $is_done }&lt;/b&gt;
 
----------------
+------------------------------------------------------------
 { $tags }"""]: ...
 
     @staticmethod
@@ -59,7 +73,10 @@ class Todo:
     def edit_button() -> Literal["""🛠 Edit 🛠"""]: ...
 
     @staticmethod
-    def create_button() -> Literal["""➕Create task ➕"""]: ...
+    def create_button() -> Literal["""Create task"""]: ...
+
+    @staticmethod
+    def show_comments_button() -> Literal["""💬 Comments 💬"""]: ...
 
 
 class TodoList:
@@ -112,4 +129,48 @@ class Edit:
 
     @staticmethod
     def confirm() -> Literal["""&lt;b&gt;Confirm change:&lt;/b&gt;"""]: ...
+
+
+class Create:
+    @staticmethod
+    def title() -> Literal["""&lt;b&gt;Enter title&lt;/b&gt;"""]: ...
+
+    @staticmethod
+    def description() -> Literal["""&lt;b&gt;Enter description&lt;/b&gt;"""]: ...
+
+    @staticmethod
+    def end_time() -> Literal["""&lt;b&gt;Enter end time in the format DD.MM.YYYY HH:MM&lt;/b&gt;"""]: ...
+
+    @staticmethod
+    def tags() -> Literal["""&lt;b&gt;Enter comma-delimited tags&lt;/b&gt;"""]: ...
+
+    @staticmethod
+    def confirm() -> Literal["""&lt;b&gt;Confirm create:&lt;/b&gt;"""]: ...
+
+
+class Comment:
+    create: CommentCreate
+    delete: CommentDelete
+    edit: CommentEdit
+
+
+class CommentCreate:
+    @staticmethod
+    def button() -> Literal["""Add comment"""]: ...
+
+    @staticmethod
+    def message() -> Literal["""&lt;b&gt;Enter comment text&lt;/b&gt;"""]: ...
+
+
+class CommentDelete:
+    @staticmethod
+    def button() -> Literal["""🗑 Delete 🗑"""]: ...
+
+
+class CommentEdit:
+    @staticmethod
+    def button() -> Literal["""🛠 Edit 🛠"""]: ...
+
+    @staticmethod
+    def message() -> Literal["""&lt;b&gt;Enter comment text&lt;/b&gt;"""]: ...
 

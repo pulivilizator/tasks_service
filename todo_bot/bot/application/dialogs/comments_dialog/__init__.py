@@ -1,0 +1,1 @@
+from .dialog import dialog as comments_dialog

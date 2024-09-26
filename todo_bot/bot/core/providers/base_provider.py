@@ -28,8 +28,7 @@ class BaseProvider(Provider):
 
     @provide(scope=Scope.APP)
     async def get_session(self) -> AsyncIterator[ClientSession]:
-        session = await AiohttpSession().create_session()
-        yield session
-        await session.close()
+        async with ClientSession() as session:
+            yield session
 
 

@@ -7,7 +7,7 @@ from fluentogram import TranslatorRunner
 from dishka.integrations.aiogram import FromDishka
 
 from core import dto
-from core.enums import ElementsPerPage
+from core.enums import ElementsPerPage, V1TasksUrls
 from services.todo_service import TodoService
 
 if TYPE_CHECKING:
@@ -19,10 +19,17 @@ async def todo_list_getter(dialog_manager: DialogManager,
                            i18n: TranslatorRunner,
                            todo_service: FromDishka[TodoService],
                            **kwargs):
-    todo_list = await todo_service.get_list()
+    todos = dialog_manager.dialog_data.get('todos')
+    if todos is None:
+        todo_list: list[dto.Todo] = await todo_service.get_list(url=V1TasksUrls.TASKS, response_model=dto.Todo)
+        dialog_manager.dialog_data.update({'todos': [todo.model_dump_json() for todo in todo_list]})
+    else:
+        todo_list = [dto.Todo.model_validate_json(todo)
+                     for todo in todos]
+
     return {
         'todo_list_message': i18n.todo.list.message(),
-        'notes': todo_list,
+        'todos': todo_list,
         'single_page': len(todo_list) / ElementsPerPage.COUNT > 1
     }
 
@@ -42,7 +49,7 @@ async def detail_getter(dialog_manager: DialogManager,
     todo_slug = dialog_manager.dialog_data.get('todo_slug')
     if todo_slug is None:
         todo_slug = dialog_manager.event.data.split(':')[1]
-        todo = await todo_service.get_by_slug(slug=todo_slug)
+        todo = await todo_service.get_by_slug(url=V1TasksUrls.CURRENT_TASK.format(todo_slug), response_model=dto.TodoDetail)
         dialog_manager.dialog_data.update({'todo_slug': todo_slug})
         dialog_manager.dialog_data.update({'todo': todo.model_dump_json()})
     else:
@@ -66,4 +73,5 @@ async def detail_getter(dialog_manager: DialogManager,
         'change_status': i18n.todo.change_status(),
         'todo_delete': i18n.todo.delete_button(),
         'start_edit': i18n.todo.edit_button(),
+        'show_comments': i18n.todo.show_comments_button(),
     }

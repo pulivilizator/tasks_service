@@ -1,6 +1,6 @@
 from aiogram import Router
 from .handlers.commands_handler import router as commands_router
-from .dialogs import start_dialog, todo_dialog, edit_dialog, create_dialog
+from .dialogs import start_dialog, todo_dialog, edit_dialog, create_dialog, comments_dialog
 
 def get_routers() -> list[Router]:
     return [
@@ -9,4 +9,5 @@ def get_routers() -> list[Router]:
         todo_dialog,
         edit_dialog,
         create_dialog,
+        comments_dialog,
     ]

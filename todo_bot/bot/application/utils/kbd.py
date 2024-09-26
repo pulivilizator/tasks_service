@@ -1,6 +1,6 @@
 from aiogram_dialog.widgets.kbd import Row, FirstPage, PrevPage, CurrentPage, NextPage, LastPage
-from aiogram_dialog.widgets.text import Const
-
+from aiogram_dialog.widgets.kbd.pager import DEFAULT_CURRENT_BUTTON_TEXT
+from aiogram_dialog.widgets.text import Const, Format
 
 def get_scroll_buttons(scroll_id):
     return Row(

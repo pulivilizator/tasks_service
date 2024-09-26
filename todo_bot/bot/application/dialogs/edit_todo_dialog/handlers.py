@@ -19,7 +19,6 @@ if TYPE_CHECKING:
 async def edit_todo_save(callback: CallbackQuery,
                         widget: Button,
                         dialog_manager: DialogManager,
-                        todo_service: FromDishka[TodoService],
                         *args, **kwargs):
     todo = dto.TodoDetail.model_validate_json(dialog_manager.start_data.get('todo'))
     result_data = dialog_manager.middleware_data.get('aiogd_context').widget_data

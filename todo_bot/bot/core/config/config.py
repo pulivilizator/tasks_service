@@ -20,7 +20,8 @@ def get_config(path: str = None) -> ConfigModel:
 
     return ConfigModel(
         redis=RedisConfig(
-            dsn=env.str('REDIS_STORAGE_DSN')
+            dsn='redis://' + env.str('REDIS_STORAGE_DSN'),
+            pubsub_dsn='redis://' + env.str('REDIS_PUBSUB_DSN')
         ),
         bot=BotConfig(
             token=env.str('BOT_TOKEN')

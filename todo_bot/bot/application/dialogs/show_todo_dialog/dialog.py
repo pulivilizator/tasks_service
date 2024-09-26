@@ -1,11 +1,12 @@
 from aiogram_dialog import Dialog, Window
-from aiogram_dialog.widgets.kbd import Back, Cancel, ListGroup, Button, ScrollingGroup, Select, Column, SwitchTo, Start
+from aiogram_dialog.widgets.kbd import Back, Cancel, ListGroup, Button, ScrollingGroup, Select, Column, SwitchTo, Start, \
+    Row
 from aiogram_dialog.widgets.text import Format
 
 from application.states import TodoSG, CreateSG
 from core.enums import ElementsPerPage
 from .getters import todo_getter, todo_list_getter, detail_getter
-from .handlers import change_status, clear_data, delete_todo, start_edit, send_todo
+from .handlers import change_status, clear_data, delete_todo, start_edit, send_todo, start_show_comments
 from ...utils.kbd import get_scroll_buttons
 
 dialog = Dialog(
@@ -20,7 +21,7 @@ dialog = Dialog(
                 ),
                 id="select_todo",
                 item_id_getter=lambda item: item.slug,
-                items="notes",
+                items="todos",
             ),
             height=ElementsPerPage.COUNT,
             hide_pager=True,
@@ -34,8 +35,11 @@ dialog = Dialog(
     Window(
         Format('{todo_message}'),
         Button(text=Format('{change_status}'), id='change_status', on_click=change_status),
+        Button(text=Format('{show_comments}'), id='show_comments', on_click=start_show_comments),
+        Row(
         Button(text=Format('{start_edit}'), id='start_edit', on_click=start_edit),
         SwitchTo(text=Format('{todo_delete}'), state=TodoSG.todo_list, id="delete_todo", on_click=delete_todo),
+        ),
         SwitchTo(text=Format('{back_message}'), state=TodoSG.todo_list, id="switch_todo_list", on_click=clear_data),
         getter=detail_getter,
         state=TodoSG.todo_detail

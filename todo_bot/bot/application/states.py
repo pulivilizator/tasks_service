@@ -21,3 +21,8 @@ class CreateSG(StatesGroup):
     end_time = State()
     tags = State()
     save = State()
+
+class CommentsSG(StatesGroup):
+    comments_list = State()
+    comment_create = State()
+    comment_edit = State()
