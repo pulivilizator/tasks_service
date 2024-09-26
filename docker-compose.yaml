@@ -29,7 +29,7 @@ services:
     env_file:
       - ./todo_app/.env
     environment:
-      - DJANGO_SUPERUSER_TG_ID=1744297788
+      - DJANGO_SUPERUSER_TG_ID=
       - DJANGO_SUPERUSER_FIRST_NAME=name
       - DJANGO_SUPERUSER_USERNAME=user
       - DJANGO_SUPERUSER_PASSWORD=1234
