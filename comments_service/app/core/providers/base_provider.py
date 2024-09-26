@@ -19,7 +19,7 @@ class BaseProvider(Provider):
         yield r
         await r.aclose()
 
-    @provide(scope=Scope.APP)
+    @provide(scope=Scope.REQUEST)
     async def get_client_session(self) -> AsyncIterator[ClientSession]:
         async with ClientSession() as session:
             yield session

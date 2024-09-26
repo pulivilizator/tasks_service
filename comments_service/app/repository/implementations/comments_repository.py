@@ -4,12 +4,12 @@ from repository.interfaces.redis_repository import RedisRepository
 
 
 class CommentRepository(RedisRepository):
-    async def save_comment(self, comment: dto.RequestComment) -> dto.ResponseCreateComment:
+    async def save_comment(self, comment: dto.RequestComment) -> dto.ResponseComment:
         comments_incr_key = CommentKeys.COMMENT_ID.format(comment.task_slug)
         comment_id = await self._r.incr(comments_incr_key)
         comments_key = CommentKeys.COMMENTS_KEY.format(comment.task_slug)
         await self._r.hset(comments_key, comment_id, comment.content)
-        return dto.ResponseCreateComment(comment_id=str(comment_id))
+        return dto.ResponseComment(comment_id=str(comment_id), content=comment.content)
 
     async def get_comments(self, task_slug: str) -> list[dto.ResponseComment]:
         comments_key = CommentKeys.COMMENTS_KEY.format(task_slug)
@@ -18,12 +18,11 @@ class CommentRepository(RedisRepository):
                             for k, v in comments.items()]
         return decoded_comments
 
-    async def update_comment(self, new_comment: dto.UpdateComment) -> bool:
+    async def update_comment(self, new_comment: dto.UpdateComment) -> dto.UpdateComment:
         comments_key = CommentKeys.COMMENTS_KEY.format(new_comment.task_slug)
         if await self._r.hexists(comments_key, new_comment.comment_id):
             await self._r.hset(comments_key, new_comment.comment_id, new_comment.content)
-            return True
-        return False
+            return new_comment
 
     async def delete_comment(self, task_slug, comment_id: int) -> bool:
         comments_key = CommentKeys.COMMENTS_KEY.format(task_slug)

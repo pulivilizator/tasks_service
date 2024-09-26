@@ -17,7 +17,8 @@ router = APIRouter(tags=['Comment'],
                               status.HTTP_429_TOO_MANY_REQUESTS: {'detail': 'string'}})
 
 @router.get('/comments/{task_slug}/',
-            summary='Получить все комментарии к задаче')
+            summary='Получить все комментарии к задаче',
+            response_model=list[dto.ResponseComment])
 @inject
 async def get_comments(
         task_slug: Annotated[str, Path(
@@ -31,25 +32,26 @@ async def get_comments(
 
 @router.post('/comments/',
              status_code=status.HTTP_201_CREATED,
-             response_model=dto.ResponseCreateComment,
+             response_model=dto.ResponseComment,
              summary='Создание комментария')
 @inject
 async def create_comment(
         comment: Annotated[dto.RequestComment, Body()],
         service: FromDishka[CommentsService],
 ):
-    comment_id = await service.create_comment(comment)
-    return comment_id
+    comment = await service.create_comment(comment)
+    return comment
 
-@router.put('/comments/',
-            status_code=status.HTTP_204_NO_CONTENT,
+@router.patch('/comments/',
+            response_model=dto.UpdateComment,
             summary='Обновление комментария')
 @inject
 async def update_comment(
         new_comment: Annotated[dto.UpdateComment, Body()],
         service: FromDishka[CommentsService]
 ):
-    await service.update_comment(new_comment=new_comment)
+   comment = await service.update_comment(new_comment=new_comment)
+   return comment
 
 @router.delete('/comments/{task_slug}/{comment_id}/',
                status_code=status.HTTP_204_NO_CONTENT,

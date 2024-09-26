@@ -23,11 +23,11 @@ class CommentsService:
         comments = await self.repository.get_comments(task_slug)
         return comments
 
-    async def create_comment(self, comment: dto.RequestComment) -> dto.ResponseCreateComment:
-        comment_id = await self.repository.save_comment(comment)
-        return comment_id
+    async def create_comment(self, comment: dto.RequestComment) -> dto.ResponseComment:
+        comment = await self.repository.save_comment(comment)
+        return comment
 
-    async def update_comment(self, new_comment: dto.UpdateComment) -> bool:
+    async def update_comment(self, new_comment: dto.UpdateComment) -> dto.UpdateComment:
         return await self.repository.update_comment(new_comment)
 
     async def delete_comment(self, task_slug: str, comment_id: str) -> bool:
@@ -37,13 +37,15 @@ class CommentsService:
         """
         Проверяет аутентификацию или существование задачи(что включает в себя аутентификацию)
         """
-        print(task_slug)
         path = V1TasksUrls.GET_CURRENT_TASK.format(task_slug) if task_slug else V1TasksUrls.GET_TASKS
         try:
+            print('request')
             await self._make_request(method=HTTPMethod.GET,
                                      url=self.config.backend_url.unicode_string() + path,
                                      headers=headers,
                                      cookies=cookies)
+        except Exception as e:
+            raise e
         except ClientResponseError as e:
             if e.status == status.HTTP_404_NOT_FOUND:
                 raise TaskNotFound(task_slug)
@@ -61,6 +63,7 @@ class CommentsService:
                             headers: Optional[dict] = None,
                             json: Optional[dict] = None,
                             cookies: Optional[dict] = None):
+        print(url)
         async with self.session.request(method, url, json=json, cookies=cookies, headers=headers) as response:
             response.raise_for_status()
             return await response.json()
