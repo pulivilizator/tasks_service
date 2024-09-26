@@ -10,18 +10,15 @@ from apps.authentication.models import User
 
 class UserSerializer(serializers.Serializer):
     tg_id = serializers.IntegerField(required=True)
-    password = serializers.CharField(required=True)
+    password = serializers.CharField(required=False, allow_null=True, allow_blank=True)
+    username = serializers.CharField(max_length=255, required=False, allow_null=True)
+    first_name = serializers.CharField(max_length=255, required=False, allow_null=True)
+    last_name = serializers.CharField(max_length=255, required=False, allow_null=True)
+    confirmation = serializers.BooleanField(default=False)
 
     class Meta:
-        fields = ('tg_id', 'password')
+        fields = ('tg_id', 'password', 'username', 'first_name', 'last_name')
         extra_kwargs = {'password': {'write_only': True}}
-
-    def validate_tg_id(self, value):
-        try:
-            get_user_model().objects.get(tg_id=value)
-            return value
-        except User.DoesNotExist:
-            raise serializers.ValidationError('User does not exist')
 
     def validate_password(self, value):
         try:
