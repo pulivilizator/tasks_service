@@ -16,8 +16,8 @@ dialog = Dialog(
         StubScroll(id='comments_scroll', pages='comments_count'),
         get_scroll_buttons('comments_scroll'),
         SwitchTo(text=Format('{create_comment}'), state=CommentsSG.comment_create, id='create_comment'),
-        SwitchTo(Format('{edit_comment}'), id='edit_comment', state=CommentsSG.comment_edit),
-        Button(Format('{delete_comment}'), id='delete_comment', on_click=comment_delete),
+        SwitchTo(Format('{edit_comment}'), id='edit_comment', state=CommentsSG.comment_edit, when='{edit_show}'),
+        Button(Format('{delete_comment}'), id='delete_comment', on_click=comment_delete, when='{edit_show}'),
         Cancel(text=Format('{back_message}')),
         getter=comments_getter,
         state=CommentsSG.comments_list

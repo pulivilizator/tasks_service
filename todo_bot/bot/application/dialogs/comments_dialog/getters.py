@@ -47,6 +47,7 @@ async def comments_getter(dialog_manager: DialogManager,
         'create_comment': i18n.comment.create.button(),
         'delete_comment': i18n.comment.delete.button(),
         'edit_comment': i18n.comment.edit.button(),
+        'edit_show': current_comment is not None
     }
 
 async def create_comment_getter(dialog_manager: DialogManager,
